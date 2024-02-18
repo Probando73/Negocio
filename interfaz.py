@@ -1,14 +1,23 @@
 from tkinter import *  
+from tkinter import tkk
+
+### buscar info sobre treeview  https://recursospython.com/guias-y-manuales/vista-de-arbol-treeview-en-tkinter/ ###
 
 ### Funciones ###
 
-# Ventanas secundarias 
+# Ventanas secundarias #
 def ventana_secundaria(raiz, title):
     nueva_ventana = Toplevel(raiz)
     nueva_ventana.title(title)
     nueva_ventana.config(width=500, height=500)
-  
     return nueva_ventana
+
+# Treeview #
+def mostrar_treeview(raiz, *columnas):
+    treeview = ttk.Treeview(raiz, columns= (columnas))
+    treeview.pack()
+    return treeview
+    
     
 ################## Se crea ventana principal, titulo y tamaño ##################
 
