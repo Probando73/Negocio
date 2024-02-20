@@ -13,6 +13,7 @@ def ventana_secundaria(raiz, title, ancho=500, alto=500):
     nueva_ventana.title(title)
     nueva_ventana.config(width=ancho, height=alto)
     nueva_ventana.resizable(0, 0)
+    nueva_ventana.grab_set()
     return nueva_ventana
 
 
@@ -22,10 +23,24 @@ def ventana_clientes():
     ventana = ventana_secundaria(
         ventana_principal, 'Clientes', ancho=622, alto=300)
     Button(ventana, text='Nuevo', width=10, height=2, font=(
-        'bold', 10,), command=None).place(x=10, y=10)
+        'bold', 10,), command=nuevo_cliente).place(x=10, y=10)
     Button(ventana, text='Buscar', width=10, height=2, font=(
-        'bold', 10,), command=None).place(x=210, y=10)
+        'bold', 10,), command=None).place(x=450, y=10)
+    Entry(ventana, textvariable=StringVar).place(x=310, y=30)
+    Label(ventana, text='Nombre :').place(x=250, y=30)
     mostrar_treeview(ventana, 10, 60, *('a', 'b'))
+    return ventana
+
+
+def nuevo_cliente():
+    ventana = ventana_secundaria(
+        ventana_principal, 'Nuevo cliente', ancho=200, alto=130)
+    Label(ventana, text='Nombre :').place(x=10, y=10)
+    Label(ventana, text='Telefono :').place(x=10, y=40)
+    Entry(ventana, textvariable=StringVar).place(x=70, y=10)
+    Entry(ventana, textvariable=IntVar).place(x=70, y=40)
+    Button(ventana, text='Guardar', width=10, height=2, font=(
+        'bold', 10,), command=None).place(x=60, y=70)
     return ventana
 
 
@@ -140,6 +155,5 @@ ventas = Button(ventana_principal, text='Ventas', width=10, height=2, font=('bol
 # Botones ventana Ventas #
 
 # ventas_buscar = Button(ventana_principal, text='Nuevo', command=buscar_venta)
-
-
+ventana_principal.grab_set()
 ventana_principal.mainloop()
