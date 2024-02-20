@@ -8,14 +8,25 @@ from tkinter import ttk
 # Ventanas secundarias #
 
 
-def ventana_secundaria(raiz, title):
+def ventana_secundaria(raiz, title, ancho=500, alto=500):
     nueva_ventana = Toplevel(raiz)
     nueva_ventana.title(title)
-    nueva_ventana.config(width=500, height=500)
+    nueva_ventana.config(width=ancho, height=alto)
+    nueva_ventana.resizable(0, 0)
+    return nueva_ventana
 
 
 def ventana_clientes():
-    return ventana_secundaria(ventana_principal, 'Clientes')
+
+    # Botones ventana Clientes #
+    ventana = ventana_secundaria(
+        ventana_principal, 'Clientes', ancho=622, alto=300)
+    Button(ventana, text='Nuevo', width=10, height=2, font=(
+        'bold', 10,), command=None).place(x=10, y=10)
+    Button(ventana, text='Buscar', width=10, height=2, font=(
+        'bold', 10,), command=None).place(x=210, y=10)
+    mostrar_treeview(ventana, 10, 60, *('a', 'b'))
+    return ventana
 
 
 def ventana_stocks():
@@ -33,9 +44,9 @@ def ventana_ventas():
 # Treeview #
 
 
-def mostrar_treeview(raiz, *columnas):
+def mostrar_treeview(raiz, eje_x=10, eje_y=10, *columnas):
     treeview = ttk.Treeview(raiz, columns=(columnas))
-    treeview.pack()
+    treeview.place(x=eje_x, y=eje_y)
     return treeview
 
 
@@ -43,7 +54,8 @@ def mostrar_treeview(raiz, *columnas):
 
 ventana_principal = Tk()
 ventana_principal.title("Negocio 2024")
-ventana_principal.config(width=500, height=500)
+ventana_principal.config(width=440, height=70)
+ventana_principal.resizable(0, 0)
 
 ################## Ventanas secundarias ##################
 
@@ -99,24 +111,17 @@ Nueva ventana con un listado de ventas y 1 boton
 ################## Botones ventana principal ##################
 
 ## Determinar posicionamiento ##
-# Botones principales #
+# Botones principales
 
-clientes = Button(ventana_principal, text='Clientes',
-                  command=ventana_clientes).pack()
-stocks = Button(ventana_principal, text='Stocks',
-                command=ventana_stocks).pack()
-pedidos = Button(ventana_principal, text='Pedidos',
-                 command=ventana_pedidos).pack()
-ventas = Button(ventana_principal, text='Ventas',
-                command=ventana_ventas).pack()
+clientes = Button(ventana_principal, text='Clientes', width=10, height=2, font=('bold', 12,),
+                  command=ventana_clientes).place(x=5, y=10)
+stocks = Button(ventana_principal, text='Stocks', width=10, height=2, font=('bold', 12,),
+                command=ventana_stocks).place(x=115, y=10)
+pedidos = Button(ventana_principal, text='Pedidos', width=10, height=2, font=('bold', 12,),
+                 command=ventana_pedidos).place(x=225, y=10)
+ventas = Button(ventana_principal, text='Ventas', width=10, height=2, font=('bold', 12,),
+                command=ventana_ventas).place(x=335, y=10)
 
-# Botones ventana Clientes #
-
-# cliente_nuevo = Button(ventana_principal, text='Nuevo', command=nuevo_cliente)
-# cliente_editar = Button(
-#    ventana_principal, text='Editar', command=editar_cliente)
-# cliente_actualizar = Button(
-#    ventana_principal, text='Actualizar', command=editar_cliente)
 
 # Botones ventana Stocks #
 
