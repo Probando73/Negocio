@@ -12,7 +12,7 @@ def ventana_secundaria(raiz, title, ancho=500, alto=500):
     nueva_ventana = Toplevel(raiz)
     nueva_ventana.title(title)
     nueva_ventana.config(width=ancho, height=alto)
-    nueva_ventana.resizable(0, 0)
+    nueva_ventana.resizable(1, 0)
     nueva_ventana.grab_set()
     return nueva_ventana
 
@@ -28,7 +28,7 @@ def ventana_clientes():
         'bold', 10,), command=None).place(x=450, y=10)
     Entry(ventana, textvariable=StringVar).place(x=310, y=30)
     Label(ventana, text='Nombre :').place(x=250, y=30)
-    mostrar_treeview(ventana, 10, 60, *('a', 'b'))
+    mostrar_treeview(ventana, 10, 60, *('Nombre', 'Telefono'))
     return ventana
 
 
@@ -43,9 +43,31 @@ def nuevo_cliente():
         'bold', 10,), command=None).place(x=60, y=70)
     return ventana
 
+### aca estamos ###
+
 
 def ventana_stocks():
-    return ventana_secundaria(ventana_principal, 'Stocks')
+    ventana = ventana_secundaria(ventana_principal, 'Stocks', 550, 300)
+    Button(ventana, text='Nuevo producto', width=14, height=2, font=(
+        'bold', 10,), command=nuevo_ingreso).place(x=10, y=10)
+    Button(ventana, text='Buscar', width=10, height=2, font=(
+        'bold', 10,), command=None).place(x=450, y=10)
+    Entry(ventana, textvariable=StringVar).place(x=310, y=30)
+    Label(ventana, text='Marca :').place(x=250, y=30)
+    treeview = mostrar_treeview(ventana, 10, 60, *('Marca', 'Producto',
+                                                   'Cantidad', 'Precio de mercado', 'Precio de venta'))
+    return ventana
+
+
+def nuevo_ingreso():
+    ventana = ventana_secundaria(ventana_principal, 'Nuevo producto', 550, 300)
+    labels = ('Marca', 'Producto', 'Cantidad',
+              'Precio de mercado', 'Precio de venta')
+    y = 10
+    for x in labels:
+        Label(ventana, text=f'{x} :',).place(x=10, y=y)
+        y += 30
+    return ventana
 
 
 def ventana_pedidos():
@@ -62,6 +84,12 @@ def ventana_ventas():
 def mostrar_treeview(raiz, eje_x=10, eje_y=10, *columnas):
     treeview = ttk.Treeview(raiz, columns=(columnas))
     treeview.place(x=eje_x, y=eje_y)
+    nueva_columna = list(columnas)
+    nueva_columna.insert(0, 'ID')
+    contador = 0
+    for x in nueva_columna:
+        treeview.heading(f'#{contador}', text=x)
+        contador += 1
     return treeview
 
 
@@ -74,26 +102,6 @@ ventana_principal.resizable(0, 0)
 
 ################## Ventanas secundarias ##################
 
-"""
-Ventana con 4 botones
-"""
-# ventana_clientes = ventana_secundaria(ventana_principal, 'Clientes')
-# ventana_stocks = ventana_secundaria(ventana_principal, 'Stocks')
-# ventana_pedidos = ventana_secundaria(ventana_principal, 'Pedidos')
-# ventana_ventas = ventana_secundaria(ventana_principal, 'Ventas')
-#
-################## Ventanas terciarias ##################
-
-# Clientes #
-"""
-Nueva ventana con un listado de clientes y 3 botones 
-"""
-# nuevo_cliente = ventana_clientes = ventana_secundaria(
-#    ventana_principal, 'Nuevo cliente')  # verificar si responde a la raiz o al toplevel.
-# editar_cliente = ventana_clientes = ventana_secundaria(
-#    ventana_principal, 'Editar cliente')
-# buscar_cliente = ventana_clientes = ventana_secundaria(
-#   ventana_principal, 'Buscar cliente')
 
 # Stocks #
 """
