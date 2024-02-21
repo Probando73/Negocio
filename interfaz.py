@@ -12,7 +12,7 @@ def ventana_secundaria(raiz, title, ancho=500, alto=500):
     nueva_ventana = Toplevel(raiz)
     nueva_ventana.title(title)
     nueva_ventana.config(width=ancho, height=alto)
-    nueva_ventana.resizable(1, 0)
+    nueva_ventana.resizable(0, 0)
     nueva_ventana.grab_set()
     return nueva_ventana
 
@@ -21,13 +21,13 @@ def ventana_clientes():
 
     # Botones ventana Clientes #
     ventana = ventana_secundaria(
-        ventana_principal, 'Clientes', ancho=622, alto=300)
+        ventana_principal, 'Clientes', ancho=472, alto=300)
     Button(ventana, text='Nuevo', width=10, height=2, font=(
         'bold', 10,), command=nuevo_cliente).place(x=10, y=10)
     Button(ventana, text='Buscar', width=10, height=2, font=(
-        'bold', 10,), command=None).place(x=450, y=10)
-    Entry(ventana, textvariable=StringVar).place(x=310, y=30)
-    Label(ventana, text='Nombre :').place(x=250, y=30)
+        'bold', 10,), command=None).place(x=372, y=10)
+    Entry(ventana, textvariable=StringVar).place(x=230, y=30)
+    Label(ventana, text='Nombre :').place(x=170, y=30)
     mostrar_treeview(ventana, 10, 60, *('Nombre', 'Telefono'))
     return ventana
 
@@ -43,31 +43,38 @@ def nuevo_cliente():
         'bold', 10,), command=None).place(x=60, y=70)
     return ventana
 
-### aca estamos ###
-
 
 def ventana_stocks():
-    ventana = ventana_secundaria(ventana_principal, 'Stocks', 550, 300)
+    ventana = ventana_secundaria(ventana_principal, 'Stocks', 922, 300)
     Button(ventana, text='Nuevo producto', width=14, height=2, font=(
         'bold', 10,), command=nuevo_ingreso).place(x=10, y=10)
     Button(ventana, text='Buscar', width=10, height=2, font=(
         'bold', 10,), command=None).place(x=450, y=10)
     Entry(ventana, textvariable=StringVar).place(x=310, y=30)
-    Label(ventana, text='Marca :').place(x=250, y=30)
+    Label(ventana, text='Marca :').place(x=270, y=30)
     treeview = mostrar_treeview(ventana, 10, 60, *('Marca', 'Producto',
                                                    'Cantidad', 'Precio de mercado', 'Precio de venta'))
     return ventana
 
 
 def nuevo_ingreso():
-    ventana = ventana_secundaria(ventana_principal, 'Nuevo producto', 550, 300)
+    ventana = ventana_secundaria(ventana_principal, 'Nuevo producto', 250, 200)
     labels = ('Marca', 'Producto', 'Cantidad',
               'Precio de mercado', 'Precio de venta')
     y = 10
+    y_e = 10
     for x in labels:
-        Label(ventana, text=f'{x} :',).place(x=10, y=y)
+        Label(ventana, text=f'{x} :', justify=CENTER).place(x=10, y=y)
+        # ver de crear un diccionario con el tipo de dato
+        Entry(ventana, textvariable=StringVar).place(x=120, y=y_e)
         y += 30
+        y_e += 30
+
+    Button(ventana, text='Guardar', width=10, height=1, font=(
+        'bold', 10,), command=None).place(x=90, y=160)
     return ventana
+
+### aca estamos ###
 
 
 def ventana_pedidos():
@@ -88,6 +95,7 @@ def mostrar_treeview(raiz, eje_x=10, eje_y=10, *columnas):
     nueva_columna.insert(0, 'ID')
     contador = 0
     for x in nueva_columna:
+        treeview.column(f'#{contador}', width=150, minwidth=50, stretch=True)
         treeview.heading(f'#{contador}', text=x)
         contador += 1
     return treeview
