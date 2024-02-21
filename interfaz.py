@@ -78,7 +78,27 @@ def nuevo_ingreso():
 
 
 def ventana_pedidos():
-    return ventana_secundaria(ventana_principal, 'Pedidos')
+    ventana = ventana_secundaria(ventana_principal, 'Pedidos', 1222, 300)
+    Button(ventana, text='Nuevo', width=14, height=2, font=(
+        'bold', 10,), command=nuevo_pedido).place(x=10, y=10)
+    Button(ventana, text='Buscar', width=10, height=2, font=(
+        'bold', 10,), command=None).place(x=450, y=10)
+    Entry(ventana, textvariable=StringVar).place(x=310, y=30)
+    Label(ventana, text='Marca :').place(x=270, y=30)
+    treeview = mostrar_treeview(ventana, 10, 60, *('N° de pedido', 'Cliente', 'Marca', 'Producto',
+                                                   'Cantidad', 'Precio unitario', 'Subtotal'))
+    return ventana
+
+
+def nuevo_pedido():
+    ventana = ventana_secundaria(ventana_principal, 'Nuevo pedido')
+    cuadro = Frame(ventana, width=430, height=350,
+                   bg='blue', relief='sunken').place(x=20, y=100)
+    Label(cuadro, text='probando').place(x=10, y=20)
+    # treeview = mostrar_treeview(cuadro, 10, 60, *('N° de pedido', 'Cliente', 'Marca', 'Producto',
+    #                                              'Cantidad', 'Precio unitario', 'Subtotal'))
+
+    return ventana
 
 
 def ventana_ventas():
@@ -110,15 +130,6 @@ ventana_principal.resizable(0, 0)
 
 ################## Ventanas secundarias ##################
 
-
-# Stocks #
-"""
-Nueva ventana con un listado de stocks y 3 botones 
-"""
-# ingreso_stocks = ventana_secundaria(
-#    ventana_principal, 'Nuevo ingreso')  # verificar si responde a la raiz o al toplevel.
-# editar_stocks = ventana_secundaria(ventana_principal, 'Editar stocks')
-# buscar_stocks = ventana_secundaria(ventana_principal, 'Buscar stocks')
 
 # Pedidos #
 """
