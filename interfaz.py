@@ -143,6 +143,10 @@ def ventana_ventas():
 
 
 def mostrar_treeview(raiz, eje_x=10, eje_y=10, *columnas):
+    """
+    Inserta un cuadro tipo tabla para insertar los datos.
+    """
+    
     treeview = ttk.Treeview(raiz, columns=(columnas))
     treeview.place(x=eje_x, y=eje_y)
     nueva_columna = list(columnas)
@@ -154,6 +158,16 @@ def mostrar_treeview(raiz, eje_x=10, eje_y=10, *columnas):
         contador += 1
     return treeview
 
+def mosrtrar_seleccion():
+    """
+    Muestra la informacion seleccionada
+    """
+
+    foco = ttk.Treeview.focus() # probar si guarda el dato del puntero
+    valor = ttk.Treeview.selection() # ver que muestra en la seleccion.
+    #lista_multiple= Listbox(raiz, selectmode = "multiple") # probar la seleccion multiple 
+    print('Foco puesto en: ', foco)
+    print('valor de seleccion: ', valor)
 
 ################## Se crea ventana principal, titulo y tamaño ##################
 
