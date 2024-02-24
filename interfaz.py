@@ -7,8 +7,11 @@ from tkinter import ttk
 
 # Ventanas secundarias #
 
-
 def ventana_secundaria(raiz, title, ancho=500, alto=500):
+    """
+    Permite crear una ventana secundaria con parametros por default.
+    """
+    
     nueva_ventana = Toplevel(raiz)
     nueva_ventana.title(title)
     nueva_ventana.config(width=ancho, height=alto)
@@ -18,8 +21,10 @@ def ventana_secundaria(raiz, title, ancho=500, alto=500):
 
 
 def ventana_clientes():
-
-    # Botones ventana Clientes #
+    """
+    Crea la ventana clientes con su respectiva interfaz.
+    """
+    
     ventana = ventana_secundaria(
         ventana_principal, 'Clientes', ancho=472, alto=300)
     Button(ventana, text='Nuevo', width=10, height=2, font=(
@@ -31,8 +36,19 @@ def ventana_clientes():
     mostrar_treeview(ventana, 10, 60, *('Nombre', 'Telefono'))
     return ventana
 
+def guardar_cliente(): #Falta la sintaxis para guardar en SQL
+    """
+    Guarda los datos nuevos en la tabla Clientes.
+    """
+    
+    nuevo_cliente = ()
+    return nuevo_cliente
 
 def nuevo_cliente():
+    """
+    Crea la interfaz para crear y guardar los datos de un nuevo cliente.
+    """
+    
     ventana = ventana_secundaria(
         ventana_principal, 'Nuevo cliente', ancho=200, alto=130)
     Label(ventana, text='Nombre :').place(x=10, y=10)
@@ -40,11 +56,15 @@ def nuevo_cliente():
     Entry(ventana, textvariable=StringVar).place(x=70, y=10)
     Entry(ventana, textvariable=IntVar).place(x=70, y=40)
     Button(ventana, text='Guardar', width=10, height=2, font=(
-        'bold', 10,), command=None).place(x=60, y=70)
+        'bold', 10,), command=None).place(x=60, y=70) 
     return ventana
 
 
 def ventana_stocks():
+    """
+    Crea la ventana Stocks con su respectiva interfaz.
+    """
+    
     ventana = ventana_secundaria(ventana_principal, 'Stocks', 922, 300)
     Button(ventana, text='Nuevo producto', width=14, height=2, font=(
         'bold', 10,), command=nuevo_ingreso).place(x=10, y=10)
@@ -58,6 +78,10 @@ def ventana_stocks():
 
 
 def nuevo_ingreso():
+    """
+    Crea la interfaz para crear y guardar los datos de un nuevo producto.
+    """
+    
     ventana = ventana_secundaria(ventana_principal, 'Nuevo producto', 250, 200)
     labels = ('Marca', 'Producto', 'Cantidad',
               'Precio de mercado', 'Precio de venta')
@@ -74,10 +98,12 @@ def nuevo_ingreso():
         'bold', 10,), command=None).place(x=90, y=160)
     return ventana
 
-### aca estamos ###
-
 
 def ventana_pedidos():
+    """
+    Crea la ventana Pedidos con su respectiva interfaz.
+    """
+    
     ventana = ventana_secundaria(ventana_principal, 'Pedidos', 1222, 300)
     Button(ventana, text='Nuevo', width=14, height=2, font=(
         'bold', 10,), command=nuevo_pedido).place(x=10, y=10)
@@ -91,10 +117,14 @@ def ventana_pedidos():
 
 
 def nuevo_pedido():
+    """
+    Crea la interfaz para crear y guardar los datos de un nuevo pedido.
+    """
+    
     ventana = ventana_secundaria(ventana_principal, 'Nuevo pedido')
     cuadro = Frame(ventana, width=430, height=350,
                    bg='blue', relief='sunken').place(x=20, y=100)
-    Label(cuadro, text='probando').place(x=10, y=20)
+    Label(cuadro, text='probando').place(x=30, y=140) #probar ahora si coloca el label en el frame
     # treeview = mostrar_treeview(cuadro, 10, 60, *('N° de pedido', 'Cliente', 'Marca', 'Producto',
     #                                              'Cantidad', 'Precio unitario', 'Subtotal'))
 
@@ -102,6 +132,10 @@ def nuevo_pedido():
 
 
 def ventana_ventas():
+    """
+    Crea la ventana Ventas con su respectiva interfaz.
+    """
+    
     return ventana_secundaria(ventana_principal, 'Ventas')
 
 
@@ -146,9 +180,6 @@ Nueva ventana con un listado de ventas y 1 boton
 """
 # buscar_venta = ventana_secundaria(ventana_principal, 'Buscar ventas')
 
-################## Labels (etiquetas de texto) ##################
-
-# label = Label(ventana_principal, 'Texto')
 
 ################## Botones ventana principal ##################
 
