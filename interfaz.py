@@ -139,6 +139,16 @@ def ventana_ventas():
     return ventana_secundaria(ventana_principal, 'Ventas')
 
 
+### Buscar info y probar usar Listbox ###
+
+def crear_listbox(raiz):
+    """
+    Crea un cuadro para listar elementos.
+    """
+    
+    lista = tkk.Listbox(raiz, width=430, height=350)
+
+    return lista
 # Treeview #
 
 
