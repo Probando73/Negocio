@@ -7,11 +7,12 @@ from tkinter import ttk
 
 # Ventanas secundarias #
 
+
 def ventana_secundaria(raiz, title, ancho=500, alto=500):
     """
     Permite crear una ventana secundaria con parametros por default.
     """
-    
+
     nueva_ventana = Toplevel(raiz)
     nueva_ventana.title(title)
     nueva_ventana.config(width=ancho, height=alto)
@@ -24,7 +25,7 @@ def ventana_clientes():
     """
     Crea la ventana clientes con su respectiva interfaz.
     """
-    
+
     ventana = ventana_secundaria(
         ventana_principal, 'Clientes', ancho=472, alto=300)
     Button(ventana, text='Nuevo', width=10, height=2, font=(
@@ -36,35 +37,47 @@ def ventana_clientes():
     mostrar_treeview(ventana, 10, 60, *('Nombre', 'Telefono'))
     return ventana
 
-def guardar_cliente(): #Falta la sintaxis para guardar en SQL
+
+def guardar_cliente(nombre, telefono):  # Falta la sintaxis para guardar en SQL
     """
     Guarda los datos nuevos en la tabla Clientes.
     """
-    
-    nuevo_cliente = ()
-    return nuevo_cliente
+
+    print(nombre)
+    print(telefono)
+    return guardar_cliente
+
 
 def nuevo_cliente():
     """
     Crea la interfaz para crear y guardar los datos de un nuevo cliente.
     """
-    
+
     ventana = ventana_secundaria(
         ventana_principal, 'Nuevo cliente', ancho=200, alto=130)
     Label(ventana, text='Nombre :').place(x=10, y=10)
     Label(ventana, text='Telefono :').place(x=10, y=40)
-    Entry(ventana, textvariable=StringVar).place(x=70, y=10)
-    Entry(ventana, textvariable=IntVar).place(x=70, y=40)
+    text_nombre = StringVar()
+    text_telefono = IntVar()
+    caja_nombre = Entry(ventana, textvariable=text_nombre)
+    caja_nombre.place(x=70, y=10)
+    caja_telefono = Entry(ventana, textvariable=text_telefono)
+    caja_telefono.place(x=70, y=40)
+    nuevo_nombre = str(caja_nombre.get())
+    nuevo_telefono = int(caja_telefono.get())
+    print(nuevo_nombre)
+    print(nuevo_telefono)
     Button(ventana, text='Guardar', width=10, height=2, font=(
-        'bold', 10,), command=None).place(x=60, y=70) 
-    return ventana
+        'bold', 10,), command=lambda: guardar_cliente(nuevo_nombre, nuevo_telefono)).place(x=60, y=70)
+
+    return ventana, nuevo_nombre, nuevo_telefono
 
 
 def ventana_stocks():
     """
     Crea la ventana Stocks con su respectiva interfaz.
     """
-    
+
     ventana = ventana_secundaria(ventana_principal, 'Stocks', 922, 300)
     Button(ventana, text='Nuevo producto', width=14, height=2, font=(
         'bold', 10,), command=nuevo_ingreso).place(x=10, y=10)
@@ -81,7 +94,7 @@ def nuevo_ingreso():
     """
     Crea la interfaz para crear y guardar los datos de un nuevo producto.
     """
-    
+
     ventana = ventana_secundaria(ventana_principal, 'Nuevo producto', 250, 200)
     labels = ('Marca', 'Producto', 'Cantidad',
               'Precio de mercado', 'Precio de venta')
@@ -103,7 +116,7 @@ def ventana_pedidos():
     """
     Crea la ventana Pedidos con su respectiva interfaz.
     """
-    
+
     ventana = ventana_secundaria(ventana_principal, 'Pedidos', 1222, 300)
     Button(ventana, text='Nuevo', width=14, height=2, font=(
         'bold', 10,), command=nuevo_pedido).place(x=10, y=10)
@@ -120,11 +133,12 @@ def nuevo_pedido():
     """
     Crea la interfaz para crear y guardar los datos de un nuevo pedido.
     """
-    
+
     ventana = ventana_secundaria(ventana_principal, 'Nuevo pedido')
     cuadro = Frame(ventana, width=430, height=350,
                    bg='blue', relief='sunken').place(x=20, y=100)
-    Label(cuadro, text='probando').place(x=30, y=140) #probar ahora si coloca el label en el frame
+    # probar ahora si coloca el label en el frame
+    Label(cuadro, text='probando').place(x=30, y=140)
     # treeview = mostrar_treeview(cuadro, 10, 60, *('N° de pedido', 'Cliente', 'Marca', 'Producto',
     #                                              'Cantidad', 'Precio unitario', 'Subtotal'))
 
@@ -135,7 +149,7 @@ def ventana_ventas():
     """
     Crea la ventana Ventas con su respectiva interfaz.
     """
-    
+
     return ventana_secundaria(ventana_principal, 'Ventas')
 
 
@@ -145,8 +159,8 @@ def crear_listbox(raiz):
     """
     Crea un cuadro para listar elementos.
     """
-    
-    lista = tkk.Listbox(raiz, width=430, height=350)
+
+    lista = Listbox(raiz, width=430, height=350)
 
     return lista
 # Treeview #
@@ -156,7 +170,7 @@ def mostrar_treeview(raiz, eje_x=10, eje_y=10, *columnas):
     """
     Inserta un cuadro tipo tabla para insertar los datos.
     """
-    
+
     treeview = ttk.Treeview(raiz, columns=(columnas))
     treeview.place(x=eje_x, y=eje_y)
     nueva_columna = list(columnas)
@@ -168,18 +182,20 @@ def mostrar_treeview(raiz, eje_x=10, eje_y=10, *columnas):
         contador += 1
     return treeview
 
-def mosrtrar_seleccion():
+
+def mostrar_seleccion():
     """
     Muestra la informacion seleccionada
     """
 
-    foco = ttk.Treeview.focus() # probar si guarda el dato del puntero
-    valor = ttk.Treeview.selection() # ver que muestra en la seleccion.
-    #lista_multiple= Listbox(raiz, selectmode = "multiple") # probar la seleccion multiple 
+    foco = ttk.Treeview.focus()  # probar si guarda el dato del puntero
+    valor = ttk.Treeview.selection()  # ver que muestra en la seleccion.
+    # lista_multiple= Listbox(raiz, selectmode = "multiple") # probar la seleccion multiple
     print('Foco puesto en: ', foco)
     print('valor de seleccion: ', valor)
 
 ################## Se crea ventana principal, titulo y tamaño ##################
+
 
 ventana_principal = Tk()
 ventana_principal.title("Negocio 2024")
