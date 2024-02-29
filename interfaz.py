@@ -34,18 +34,8 @@ def ventana_clientes():
         'bold', 10,), command=None).place(x=372, y=10)
     Entry(ventana, textvariable=StringVar).place(x=230, y=30)
     Label(ventana, text='Nombre :').place(x=170, y=30)
-    mostrar_treeview(ventana, 10, 60, *('Nombre', 'Telefono'))
-    return ventana
-
-
-def guardar_cliente(nombre, telefono):  # Falta la sintaxis para guardar en SQL
-    """
-    Guarda los datos nuevos en la tabla Clientes.
-    """
-
-    print(nombre)
-    print(telefono)
-    return guardar_cliente
+    arbol = mostrar_treeview(ventana, 10, 60, *('Nombre', 'Telefono'))
+    return arbol
 
 
 def nuevo_cliente():
@@ -63,14 +53,21 @@ def nuevo_cliente():
     caja_nombre.place(x=70, y=10)
     caja_telefono = Entry(ventana, textvariable=text_telefono)
     caja_telefono.place(x=70, y=40)
-    nuevo_nombre = str(caja_nombre.get())
-    nuevo_telefono = int(caja_telefono.get())
-    print(nuevo_nombre)
-    print(nuevo_telefono)
-    Button(ventana, text='Guardar', width=10, height=2, font=(
-        'bold', 10,), command=lambda: guardar_cliente(nuevo_nombre, nuevo_telefono)).place(x=60, y=70)
 
-    return ventana, nuevo_nombre, nuevo_telefono
+    boton = Button(ventana, text='Guardar', width=10, height=2, font=(
+        'bold', 10,), command=guardar_cliente)
+    boton.place(x=60, y=70)
+    datos = [caja_nombre, caja_telefono.get()]
+
+    return datos
+
+
+def guardar_cliente():  # Falta la sintaxis para guardar en SQL
+    """
+    Guarda los datos nuevos en la tabla Clientes.
+    """
+    datos = ventana_clientes
+    insertar_datos_tree(datos)
 
 
 def ventana_stocks():
@@ -193,6 +190,14 @@ def mostrar_seleccion():
     # lista_multiple= Listbox(raiz, selectmode = "multiple") # probar la seleccion multiple
     print('Foco puesto en: ', foco)
     print('valor de seleccion: ', valor)
+
+
+def insertar_datos_tree(tree):
+    """
+    Inserta los datos dentro del treeview
+    """
+
+    tree.insert('', END, values=['aaa', 111])
 
 ################## Se crea ventana principal, titulo y tamaño ##################
 
