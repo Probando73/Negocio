@@ -80,3 +80,9 @@ class Base(bd.BBDD):
         """
 
         lectura = bd.BBDD.read(self, table)
+
+    def guardar_nuevo_cliente(self,*datos):
+        """
+        Metodo para insertar datos en una tabla.
+        """
+        bd.BBDD.insert_more(self, self.clientes, *datos)
