@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-
+import base
 ### buscar info sobre treeview  https://recursospython.com/guias-y-manuales/vista-de-arbol-treeview-en-tkinter/ ###
 
 ### Funciones ###
@@ -18,6 +18,8 @@ class Ventana():
         self.botones()
         self.ventana_inicio.grab_set()
         self.ventana_inicio.mainloop()
+        # Se crea la base de datos principal si no existe.
+        self.base_datos = base.Base("Negocio_2024")
         return self.ventana_inicio
 
     def botones(self,):
