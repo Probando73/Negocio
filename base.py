@@ -1,6 +1,6 @@
 import clase_bd as bd
 
-class Base(bd):
+class Base(bd.BBDD):
     """
     Permite la interaccion con la clase BBDD, y poder gestionar mediante la app.
     """
@@ -10,7 +10,7 @@ class Base(bd):
         Metodo constructor que inicia la clase y define las variables de instancia.
         """
 
-        # Se crea la base de datos principal.
+        # Se crea la base de datos principal si no existe.
         self.base_datos = bd.BBDD("Negocio_2024")
         
         # Diccionarios con los nombres de las tablas y tipo de campo.
@@ -74,5 +74,9 @@ class Base(bd):
                                          References_table='pedidos',
                                          references_field='Precio_unitario',
                                          **self.tabla_stocks)
-        
+    def lectura_tabla(self,table):
+        """
+        Metodo para leer los datos de una tabla
+        """
 
+        lectura = bd.BBDD.read(self, table)
