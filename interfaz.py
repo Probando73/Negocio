@@ -94,15 +94,16 @@ class Ventana_clientes(Ventanas_secundarias):
         boton = Button(ventana, text='Guardar', width=10, height=2, font=(
             'bold', 10,), command=Ventana_clientes.guardar_cliente)
         boton.place(x=60, y=70)
-        datos = [caja_nombre, caja_telefono.get()]
+        self.datos = [caja_nombre.get(), caja_telefono.get()]
+        
 
         return datos
 
-    def guardar_cliente(self,):  # Falta la sintaxis para guardar en SQL
+    def guardar_nuevo_cliente(self,):  # Falta la sintaxis para guardar en SQL
         """
         Guarda los datos nuevos en la tabla Clientes.
         """
-        datos = self.ventana_clientes
+        base.Base.guardar_registros(self,*self.datos)
         insertar_datos_tree(datos)
 
 
