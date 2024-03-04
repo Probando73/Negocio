@@ -1,9 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 import base
+import clase_bd as bd
 ### buscar info sobre treeview  https://recursospython.com/guias-y-manuales/vista-de-arbol-treeview-en-tkinter/ ###
-
-
 
 
 class Ventana():
@@ -71,7 +70,8 @@ class Ventana_clientes(Ventanas_secundarias):
             'bold', 10,), command=None).place(x=372, y=10)
         Entry(ventana, textvariable=StringVar).place(x=230, y=30)
         Label(ventana, text='Nombre :').place(x=170, y=30)
-        arbol = Tree.mostrar_treeview(self,ventana, 10, 60, *('Nombre', 'Telefono'))
+        arbol = Tree.mostrar_treeview(
+            self, ventana, 10, 60, *('Nombre', 'Telefono'))
         Tree.actualizar_tree(arbol)
         return arbol
 
@@ -92,19 +92,18 @@ class Ventana_clientes(Ventanas_secundarias):
         caja_telefono.place(x=70, y=40)
 
         boton = Button(ventana, text='Guardar', width=10, height=2, font=(
-            'bold', 10,), command=Ventana_clientes.guardar_cliente)
+            'bold', 10,), command=Ventana_clientes.guardar_nuevo_cliente)
         boton.place(x=60, y=70)
         self.datos = [caja_nombre.get(), caja_telefono.get()]
-        
 
-        return datos
+        return self.datos
 
     def guardar_nuevo_cliente(self,):  # Falta la sintaxis para guardar en SQL
         """
         Guarda los datos nuevos en la tabla Clientes.
         """
-        base.Base.guardar_registros(self,*self.datos)
-        insertar_datos_tree(datos)
+        base.Base.guardar_registros(self, *self.datos)
+        Tree.insertar_datos_tree(self.datos)
 
 
 class Ventana_Stocks(Ventana_clientes):
@@ -124,8 +123,8 @@ class Ventana_Stocks(Ventana_clientes):
             'bold', 10,), command=None).place(x=450, y=10)
         Entry(ventana, textvariable=StringVar).place(x=310, y=30)
         Label(ventana, text='Marca :').place(x=270, y=30)
-        treeview = mostrar_treeview(ventana, 10, 60, *('Marca', 'Producto',
-                                                       'Cantidad', 'Precio de mercado', 'Precio de venta'))
+        treeview = Tree.mostrar_treeview(ventana, 10, 60, *('Marca', 'Producto',
+                                                            'Cantidad', 'Precio de mercado', 'Precio de venta'))
         return ventana
 
     def nuevo_ingreso(self,):
@@ -168,8 +167,8 @@ class Ventana_pedidos(Ventana_Stocks):
             'bold', 10,), command=None).place(x=450, y=10)
         Entry(ventana, textvariable=StringVar).place(x=310, y=30)
         Label(ventana, text='Marca :').place(x=270, y=30)
-        treeview = mostrar_treeview(ventana, 10, 60, *('N° de pedido', 'Cliente', 'Marca', 'Producto',
-                                                       'Cantidad', 'Precio unitario', 'Subtotal'))
+        treeview = Tree.mostrar_treeview(ventana, 10, 60, *('N° de pedido', 'Cliente', 'Marca', 'Producto',
+                                                            'Cantidad', 'Precio unitario', 'Subtotal'))
         return ventana
 
     def nuevo_pedido(self,):
@@ -187,16 +186,18 @@ class Ventana_pedidos(Ventana_Stocks):
         #                                              'Cantidad', 'Precio unitario', 'Subtotal'))
 
         return ventana
-        
+
+
 class Ventana_ventas(Ventana_pedidos):
-    def ventana_ventas(self,ventana_principal):
+    def ventana_ventas(self, ventana_principal):
         """
         Crea la ventana Ventas con su respectiva interfaz.
         """
-    
-        return ventana_secundaria(ventana_principal, 'Ventas')
+
+        pass
 
 # Treeview #
+
 
 class Tree(Ventana_ventas):
     """
@@ -208,57 +209,56 @@ class Tree(Ventana_ventas):
         Metodo constructor que inicia la clase y define los atributos de instancia.
         """
         pass
-         
-    def mostrar_treeview(self,raiz, eje_x=10, eje_y=10, *columnas):
+
+    def mostrar_treeview(self, raiz, eje_x=10, eje_y=10, *columnas):
         """
         Inserta un cuadro tipo tabla para insertar los datos.
         """
-        # ver si es necesario renombrar la ventana cliente, para que sea un atributo de clase # 
-        treeview = ttk.Treeview(self,self., columns=(columnas))
+        # ver si es necesario renombrar la ventana cliente, para que sea un atributo de clase #
+        treeview = ttk.Treeview(
+            self, self.ventana_secundaria, columns=(columnas))
         treeview.place(x=eje_x, y=eje_y)
         nueva_columna = list(columnas)
         nueva_columna.insert(0, 'ID')
         contador = 0
         for x in nueva_columna:
-            treeview.column(f'#{contador}', width=150, minwidth=50, stretch=True)
+            treeview.column(f'#{contador}', width=150,
+                            minwidth=50, stretch=True)
             treeview.heading(f'#{contador}', text=x)
             contador += 1
         return treeview
-    
-    
+
     def mostrar_seleccion():
         """
         Muestra la informacion seleccionada
         """
-    
+
         foco = ttk.Treeview.focus()  # probar si guarda el dato del puntero
         valor = ttk.Treeview.selection()  # ver que muestra en la seleccion.
         # lista_multiple= Listbox(raiz, selectmode = "multiple") # probar la seleccion multiple
         print('Foco puesto en: ', foco)
         print('valor de seleccion: ', valor)
-    
-    
+
     def insertar_datos_tree(tree):
         """
         Inserta los datos dentro del treeview
         """
         # lectura de BBDD
-        dato = bd.BBDD.read(self, 'clientes.db')
-        print(dato) #ver que trae y determinar la secuencia SQL a usar.
+        dato = bd.BBDD.read('clientes.db')
+        print(dato)  # ver que trae y determinar la secuencia SQL a usar.
         # inserto los datos al treeview #
-        tree.insert('', END, text= dato, values=[valores])
-        return dato.
-    
+        Tree.insertar_datos_tree('', END, text=dato, values=[])
+        return dato
+
     def actualizar_tree(tree):
         """ 
         Borra los datos actuales del treeview, y actualiza.
         """
-    
+
         datos = tree.get_children()
         tree.delete(datos)
-        datos_actualizados= insertar_datos_tree(tree)
+        datos_actualizados = Tree.insertar_datos_tree(tree)
         return datos_actualizados
-
 
 
 ### Buscar info y probar usar Listbox ###

@@ -1,4 +1,4 @@
-import clase_bd
+import clase_bd as bd
 import interfaz as gui
 from tkinter import *
 from tkinter import ttk
@@ -22,23 +22,22 @@ if __name__ == "__main__":
     ]
 
     # Inserto los datos creados en la tabla clientes
+    bd.BBDD.insert_more
+    bd.BBDD.insert_more('clientes.', *datos_clientes)
+    ('stocks', *datos_stocks)
+    print(bd.BBDD.read('clientes'))
 
-    base_datos.insert_more('clientes', *datos_clientes)
-    base_datos.insert_more('stocks', *datos_stocks)
-    print(base_datos.read('clientes'))
-
-    base_datos.update_where('clientes', 'Telefono', 800,
-                            'Cliente', '=', 'Maximiliano')
-    print(base_datos.read('clientes'))
+    bd.BBDD.update_where('clientes', 'Telefono', 800,
+                         'Cliente', '=', 'Maximiliano')
+    print(bd.BBDD.read('clientes'))
 
     # base_datos.delete_where('clientes', 'Cliente', '=', 'Juan')
-    print(base_datos.read('clientes'))
+    print(bd.BBDD.read('clientes'))
 
     ################## Se crea ventana principal, titulo y tamaño ##################
 
 
 ################## Ventanas secundarias ##################
-
 
 
 #### instancio la clase ventana ###
